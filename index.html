@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f1e6"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="icon.png">
+<title>柏勤減肥大作戰</title>
+<style>
+:root{--bg:#f7f1e6;--paper:#fffdfa;--ink:#171717;--gold:#b98435;--line:#e5ddcf;--muted:#777}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",sans-serif}button,input{font:inherit}
+button{cursor:pointer}.app{max-width:1220px;margin:auto;padding:14px 14px 92px}.topbar{display:flex;align-items:center;justify-content:space-between;padding:4px 3px 14px}.menu{font-size:23px;border:0;background:none}.brand{font-size:22px;font-weight:900}.sub{font-size:10px;color:#888;letter-spacing:.14em}
+.page{display:none}.page.on{display:block}.dashboard{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:var(--paper);border:1px solid var(--line);border-radius:17px;margin:10px 0;padding:15px;box-shadow:0 2px 10px #00000008}
+.hero{padding:17px}.dayrow,.detail-head,.workout-head{display:flex;justify-content:space-between;align-items:end;gap:10px}.day{font-size:30px;font-weight:900}.date{font-size:13px;color:#555;margin-top:6px}.badge{background:var(--gold);color:#fff;padding:8px 11px;border-radius:11px;font-size:13px;font-weight:800}
+.progress{height:9px;background:#ebe6dd;border-radius:99px;overflow:hidden;margin-top:13px}.progress i{display:block;height:100%;background:var(--gold);border-radius:99px}
+.section-title{font-size:19px;font-weight:850;margin:0 0 9px}.tasks{padding:10px 14px}.task{display:flex;align-items:center;gap:10px;min-height:62px;border-bottom:1px solid #eee8de}.task:last-child{border:0}.task-icon{width:28px;text-align:center;font-size:21px}.task-main{flex:1}.task-title{font-size:15px;font-weight:750}.task-detail{font-size:12px;color:#777;margin-top:2px}.task-status{font-size:20px;min-width:22px;text-align:center}.click{cursor:pointer}
+.recipe-title{font-size:20px;color:#8c5e1e;font-weight:850;margin-bottom:8px}.recipe-img{height:165px;border-radius:13px;background:linear-gradient(135deg,#ead6b5,#f8ecd7);display:flex;align-items:center;justify-content:center;font-size:58px;overflow:hidden}.meta{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:9px 0}.meta div{background:#faf5ec;border-radius:11px;padding:9px;text-align:center;font-size:12px}.meta b{display:block;font-size:16px}.method{border-top:1px solid var(--line);margin-top:10px;padding-top:9px;font-size:13px;line-height:1.7}.method ol{margin:4px 0 0;padding-left:21px;color:#555}
+.body-stats{display:grid;grid-template-columns:repeat(3,1fr);text-align:center}.body-stat{border-right:1px solid var(--line)}.body-stat:last-child{border:0}.label{font-size:12px;color:#777}.value{font-size:22px;font-weight:850;margin-top:3px}
+.calendar-card{overflow:hidden}.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.cal-title{font-size:18px;font-weight:850}.arrow{width:34px;height:34px;border:1px solid var(--line);background:#fff;border-radius:10px;font-size:22px}.legend{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:#666;margin:8px 0 10px}.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);border-left:1px solid var(--line);border-top:1px solid var(--line)}.week,.cell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center}.week{padding:7px 2px;background:#faf7f1;color:#777;font-size:11px}.cell{min-height:76px;padding:5px 2px;background:#fffdfa;cursor:pointer}.cell.empty{background:#fbf9f4;cursor:default}.cell.today{background:#fff2d6;box-shadow:inset 0 0 0 2px var(--gold)}.num{font-size:11px}.cell-status{font-size:19px;line-height:24px}.cell-type{font-size:9px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.detail-row{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}.detail-row:last-child{border:0}.right{margin-left:auto;font-size:17px}.complete-line{padding-top:9px;color:var(--gold);font-weight:800}
+.exercise-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.training-day{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 5px;text-align:center;font-size:11px;line-height:1.35}.training-day.active{background:#222;color:#fff;border-color:#222}.training-day.today{box-shadow:inset 0 0 0 2px var(--gold)}.training-day .td-status{font-size:15px;margin-top:2px}@media(max-width:850px){#trainingDays{grid-template-columns:repeat(4,1fr)!important}}.exercise{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.exercise-media{height:145px;background:#eee9df}.exercise-media img{width:100%;height:100%;object-fit:cover}.exercise-body{padding:11px}.exercise-name{font-weight:850}.exercise-en{font-size:11px;color:#777}.exercise-meta{font-size:12px;color:#666;margin:6px 0}.cues{font-size:11px;color:#666;line-height:1.55;padding-left:18px}.donebtn{width:100%;border:0;border-radius:9px;padding:9px;background:#eee9df;font-weight:750}.donebtn.done{background:#e3f3e8;color:#18713a}.walk{display:flex;justify-content:space-between;align-items:center;gap:10px}.walkbtn,.fullbtn{border:0;background:var(--gold);color:#fff;border-radius:10px;padding:10px 13px;font-weight:800}
+.seasoning-panel-hidden{display:none}.body-report-preview img{max-width:100%;border-radius:12px;border:1px solid var(--line);display:block}.seasoning-card{margin-top:14px}.seasoning-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.seasoning-sub{font-size:12px;color:#777;margin:4px 0 10px}.seasoning-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.seasoning-item{display:flex;align-items:center;gap:9px;padding:11px 12px;background:#faf6ee;border:1px solid var(--line);border-radius:11px;text-align:left;color:var(--ink)}.seasoning-item.checked{background:#e9f5ec;color:#347143}.seasoning-check{font-size:18px;width:22px}.seasoning-name{font-size:13px;font-weight:750}.reset-seasoning{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;font-size:11px;color:#777}.recipe-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.recipe-list .card{margin:0}.form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.form label{font-size:12px;color:#777}.form input{width:100%;padding:9px;margin-top:4px;border:1px solid var(--line);border-radius:9px}.record{padding:10px 0;border-bottom:1px solid var(--line)}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:#fffdf9ee;backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:3px;padding:7px}.nav button{border:0;background:none;color:#777;border-radius:11px;padding:8px 11px;font-size:11px}.nav button.on{background:#222;color:#fff}
+@media(max-width:850px){.dashboard{grid-template-columns:1fr}.exercise-grid,.recipe-list{grid-template-columns:1fr}.recipe-img{height:170px}}
+
+.recovery-list{display:grid;gap:9px;margin-top:12px}
+.recovery-item{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fffdfa}
+.recovery-item b{display:block;font-size:14px}
+.recovery-item span{display:block;color:#666;font-size:12px;margin-top:4px;line-height:1.5}
+
+.training-day.active{border:2px solid var(--gold)!important;box-shadow:0 2px 8px #00000010}
+.training-day.today::after{content:'今日';display:block;font-size:10px;color:var(--gold);margin-top:2px}
+.recovery-list{display:grid;gap:9px;margin-top:12px}
+.recovery-item{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fffdfa}
+.recovery-item b{display:block;font-size:14px}.recovery-item span{display:block;color:#666;font-size:12px;margin-top:4px;line-height:1.5}
+.week-shop{margin:10px 0}.week-shop details{background:#fffdfa;border:1px solid var(--line);border-radius:12px;margin:7px 0;overflow:hidden}
+.week-shop summary{cursor:pointer;padding:12px 14px;font-weight:800;list-style:none}.week-shop summary::-webkit-details-marker{display:none}
+.shop-body{padding:0 14px 12px}.shop-day{padding:7px 0;border-top:1px solid var(--line);font-size:12px;line-height:1.55}.shop-day b{display:block;font-size:12px}
+.shop-season{margin-top:8px;padding:10px;background:#faf6ee;border-radius:10px;font-size:12px}
+
+.recovery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.recovery-intro{grid-column:1/-1}
+.recovery-exercise{overflow:hidden}
+.recovery-exercise .exercise-media{position:relative}
+.recovery-exercise .exercise-media img{display:block;width:100%;height:250px;object-fit:cover;background:#f4ead8}
+.gif-badge{position:absolute;right:10px;bottom:10px;padding:4px 7px;border-radius:7px;background:#222;color:#fff;font-size:11px;font-weight:800}
+@media(max-width:700px){.recovery-grid{grid-template-columns:1fr}.recovery-exercise .exercise-media img{height:220px}}
+</style></head><body>
+<div class="app"><header class="topbar"><button class="menu" onclick="go('today')">☰</button><div style="text-align:center"><div class="brand">柏勤減肥大作戰</div><div class="sub">TRAINING · DIET · TRACKER</div></div><div></div></header>
+
+<section id="today" class="page on"><div class="dashboard"><div>
+<div class="card hero"><div class="dayrow"><div><div class="day" id="dayLabel"></div><div class="date" id="dateLabel"></div></div><div class="badge" id="percentBadge"></div></div><div class="progress"><i id="progressBar"></i></div></div>
+<div class="card tasks"><div class="section-title">今日任務</div>
+<div class="task click" onclick="toggleMeal()"><div class="task-icon">🍚</div><div class="task-main"><div class="task-title" id="mealTitle"></div><div class="task-detail">高蛋白 · 低糖 · 30 分鐘內</div></div><div class="task-status" id="mealStatus"></div></div>
+<div class="task"><div class="task-icon">🏋🏻</div><div class="task-main"><div class="task-title" id="trainTitle"></div><div class="task-detail" id="trainDetail"></div></div><div class="task-status" id="trainStatus"></div></div>
+<div class="task click" onclick="toggleWalk()"><div class="task-icon">🚶🏻</div><div class="task-main"><div class="task-title">快步行 30 分鐘</div><div class="task-detail">非 Rest 日目標</div></div><div class="task-status" id="walkStatus"></div></div>
+<div class="task click" onclick="toggleSimple('beer')"><div class="task-icon">🍺</div><div class="task-main"><div class="task-title">啤酒 ≤ 2 杯</div><div class="task-detail">按 Tracker 紀錄</div></div><div class="task-status" id="beerStatus"></div></div>
+<div class="task click" onclick="toggleSimple('water')"><div class="task-icon">💧</div><div class="task-main"><div class="task-title">喝水 ≥ 2L</div><div class="task-detail">按一下表示完成</div></div><div class="task-status" id="waterStatus"></div></div>
+<div class="task"><div class="task-icon">⚖️</div><div class="task-main"><div class="task-title">記錄體重／體脂 · 腰圍每 7 日</div><div class="task-detail">儲存 Tracker 後自動完成</div></div><div class="task-status" id="weightStatus"></div></div>
+</div>
+<div class="card"><div class="recipe-title">今日晚餐：<span id="recipeName"></span></div><div id="todayRecipe"></div></div>
+<div class="card"><div class="body-stats"><div class="body-stat"><div class="label">體重 (kg)</div><div class="value" id="statWeight">73.0</div></div><div class="body-stat"><div class="label">體脂 (%)</div><div class="value" id="statFat">—</div></div><div class="body-stat"><div class="label">腰圍 (cm)</div><div class="value" id="statWaist">—</div></div></div></div>
+</div><div>
+<div class="card calendar-card"><div class="cal-head"><button class="arrow" onclick="changeMonth(-1)">‹</button><div class="cal-title">訓練日曆</div><button class="arrow" onclick="changeMonth(1)">›</button></div><div class="legend">🟢 完成　🟡 部分完成　🔴 未完成　😴 Rest　🚶 Recovery</div><div class="cal-title" id="monthTitle" style="text-align:center;margin-bottom:8px"></div><div class="cal-grid" id="calendarGrid"></div></div>
+<div class="card"><div class="detail-head"><div><div class="section-title" style="margin:0">今日詳情</div><div class="date" id="detailDate"></div></div><div class="badge" id="detailDay"></div></div><div id="calendarDetail"></div></div>
+</div></div></section>
+
+<section id="training" class="page">
+<div class="card"><div class="workout-head"><div><div class="section-title" id="trainingTitle"></div><div class="muted" id="trainingSub"></div></div><b id="trainingCount"></b></div></div>
+<div class="card">
+  <div class="section-title">📅 30 日訓練安排</div>
+  <div class="muted" style="margin-bottom:10px">撳任何一天，可以查看該日完整訓練動作。</div>
+  <div id="trainingDays" style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px"></div>
+</div>
+<div id="exerciseBox" class="exercise-grid"></div><div class="card walk"><div><b>🚶🏻 快步行 30 分鐘</b><div class="muted">完成後按一下，日曆會同步。</div></div><button class="walkbtn" id="walkBtn" onclick="toggleWalk()"></button></div></section>
+<section id="calendar" class="page"><div class="card calendar-card"><div class="cal-head"><button class="arrow" onclick="changeMonth(-1)">‹</button><div class="cal-title">訓練日曆</div><button class="arrow" onclick="changeMonth(1)">›</button></div><div class="legend">🟢 完成　🟡 部分完成　🔴 未完成　😴 Rest　🚶 Recovery</div><div class="cal-title" id="monthTitle2" style="text-align:center;margin-bottom:8px"></div><div class="cal-grid" id="calendarGrid2"></div></div><div class="card"><div class="section-title">日期詳情</div><div id="calendarDetail2"></div></div></section>
+<section id="recipes" class="page"><h2>🍽️ 30 日食譜</h2>
+<div class="card seasoning-card">
+<div class="seasoning-head"><div><div class="section-title" style="margin:0">🛒 30 日調味料清單</div><div class="seasoning-sub">一次買齊，之後照食譜使用；買完可以直接 Tick。</div></div><div style="display:flex;gap:6px;align-items:center"><button class="reset-seasoning" id="seasoningToggleBtn" onclick="toggleSeasoningPanel()">收起</button><button class="reset-seasoning" onclick="resetSeasonings()">重設</button></div></div>
+<div id="seasoningPanel"><div id="seasoningList" class="seasoning-grid"></div></div>
+</div><p class="muted">每日自動輪替 · 高蛋白 · 飽肚 · 30 分鐘內 · 🚫 不使用熟蕃茄</p>
+<div class="card week-shop">
+  <div class="section-title">🛒 每 7 日買餸清單</div>
+  <div class="muted">按每星期買一次餸整理；撳星期可以收起／展開。</div>
+  <div id="weeklyShopping"></div>
+</div>
+<div id="recipeList" class="recipe-list"></div></section>
+<section id="tracker" class="page"><h2>📊 Tracker</h2>
+<div class="card"><div class="form">
+<label>體重 kg<input id="w" type="number" step=".1" placeholder="73.0"></label>
+<label>體脂 %<input id="f" type="number" step=".1"></label>
+<label id="waistField">腰圍 cm<input id="wa" type="number" step=".1" placeholder="每 7 日量一次"></label>
+<label>啤酒 500ml<input id="beer" type="number" min="0" max="2" value="0"></label>
+</div><div id="waistHint" class="muted" style="margin:8px 0 10px"></div><button class="fullbtn" onclick="saveRecord()">儲存今日</button></div>
+<div class="card"><div class="section-title">📷 小米／Zepp Life 身體組成表</div><div class="muted" style="margin-bottom:9px">可以上載你小米綠色嗰張身體組成報告；圖片會保存在本機瀏覽器。</div><input id="bodyReportUpload" type="file" accept="image/*" onchange="saveBodyReport(event)"><div id="bodyReportPreview" style="margin-top:10px"></div></div>
+<div class="card"><div class="section-title">🗂️ 紀錄</div><div id="records"></div></div></section>
+</div><nav class="nav"><button class="on" data-page="today">🏠 今日</button><button data-page="training">🏋🏻 訓練</button><button data-page="calendar">📅 日曆</button><button data-page="recipes">🍽️ 食譜</button><button data-page="tracker">📊 Tracker</button></nav>
+
+<script>
+const START_DATE='2026-09-03';
+const RECIPES=[
+['雞肉照燒飯碗','雞胸180g · 熟飯170g · 西蘭花200g · 蘑菇100g','620 kcal · 蛋白質48g',['雞胸切件煎熟。','加入醬油10ml＋味醂5ml翻炒。','加入蘑菇炒熟。','西蘭花微波加熱，配飯。']],
+['牛肉豆腐大碗烏冬','瘦牛130g · 烏冬200g · 豆腐150g · 大白菜250g · 金菇100g · 蛋1隻','650 kcal · 蛋白質45g',['白菜、金菇、豆腐加水煮。','加入牛肉煮熟。','放烏冬。','最後打入蛋。']],
+['雞肉蔬菜意粉','乾意粉70g · 雞胸180g · 蘑菇150g · 菠菜100g · 橄欖油8g','620 kcal · 蛋白質52g',['煮意粉。','雞肉及蘑菇用橄欖油煎熟。','加入菠菜。','拌入意粉，加少量醬油調味。']],
+['豬肉蕎麥麵','豬里脊150g · 熟蕎麥麵180g · 蛋1隻 · 椰菜200g · 蘑菇100g','590 kcal · 蛋白質44g',['椰菜、蘑菇煮軟。','加入豬肉煮熟。','放蕎麥麵。','最後加入蛋。']],
+['三文魚毛豆飯碗','三文魚150g · 熟飯160g · 毛豆70g · 西蘭花180g · 味噌10g','670 kcal · 蛋白質43g',['三文魚煎熟。','西蘭花、毛豆微波。','味噌加少量暖水調開。','全部配飯。']],
+['鯖魚味噌湯飯','鯖魚120g · 熟飯150g · 豆腐100g · 大白菜200g · 味噌10g','650 kcal · 蛋白質39g',['鯖魚加熱。','白菜、豆腐煮熟。','熄火後溶入味噌。','配飯食。']],
+['低糖親子丼','雞胸180g · 熟飯160g · 蛋2隻 · 洋蔥80g · 蘑菇80g','630 kcal · 蛋白質55g',['洋蔥、蘑菇加水煮軟。','加入雞肉煮熟。','倒入蛋液。','半熟凝固後淋飯。']],
+['豬肉白菜味噌鍋','豬里脊160g · 大白菜300g · 豆腐150g · 蘑菇100g · 熟飯150g · 味噌15g','640 kcal · 蛋白質47g',['白菜、蘑菇、豆腐煮熟。','加入豬肉。','熄火後加入味噌。','配飯。']],
+['雞肉豆腐麻婆風','雞肉150g · 豆腐200g · 熟飯160g · 大白菜150g · 豆瓣醬8g','610 kcal · 蛋白質50g',['雞肉炒熟。','加入白菜炒軟。','放豆腐及少量水。','加入豆瓣醬煮5分鐘。']],
+['蝦仁蛋炒飯','蝦仁180g · 熟飯180g · 蛋2隻 · 毛豆60g · 雜菜150g · 油8g','650 kcal · 蛋白質48g',['蝦仁炒熟。','加入雜菜、毛豆。','加入飯炒散。','推開飯後炒蛋，再混合。']],
+['瘦牛肉蔬菜丼','瘦牛150g · 熟飯160g · 洋蔥80g · 西蘭花150g · 蘑菇100g','640 kcal · 蛋白質43g',['洋蔥、蘑菇炒軟。','加入牛肉炒熟。','加醬油調味。','配飯及西蘭花。']],
+['鹽麴雞肉飯碗','雞胸180g · 熟飯170g · 鹽麴15g · 西蘭花200g · 毛豆60g','620 kcal · 蛋白質55g',['雞肉拌鹽麴醃10分鐘。','煎至熟透。','西蘭花、毛豆微波。','配飯。']],
+['吞拿魚豆腐丼','水浸吞拿魚150g · 豆腐150g · 熟飯160g · 蛋1隻 · 青瓜100g · 紫菜','580 kcal · 蛋白質53g',['吞拿魚瀝乾。','豆腐切塊、青瓜切片。','配飯、蛋及紫菜。','加少量醬油。']],
+['豬肉涮涮蕎麥麵','豬里脊160g · 熟蕎麥麵180g · 大白菜200g · 菠菜80g · 蛋1隻','600 kcal · 蛋白質46g',['白菜、菠菜煮熟。','逐片放豬肉煮熟。','加入蕎麥麵。','最後加蛋。']],
+['雞肉咖喱飯','雞胸180g · 熟飯160g · 薯仔100g · 甘筍80g · 洋蔥80g · 低脂咖喱塊','650 kcal · 蛋白質48g',['洋蔥炒香。','加入雞肉、薯仔、甘筍。','加水煮熟。','加入少量低脂咖喱塊。']],
+['豚肉生薑燒飯','豬里脊160g · 熟飯160g · 椰菜200g · 洋蔥80g · 薑','610 kcal · 蛋白質45g',['豬肉煎熟。','加入洋蔥。','加薑、醬油、味醂。','配椰菜及飯。']],
+['雞肉蔥鹽飯碗','雞胸180g · 熟飯160g · 青蔥50g · 西蘭花200g · 芝麻5g','600 kcal · 蛋白質52g',['雞胸煎熟切片。','青蔥加少量鹽及芝麻。','西蘭花微波。','全部配飯。']],
+['牛肉白菜粉絲鍋','瘦牛140g · 粉絲50g · 大白菜250g · 豆腐150g · 金菇100g','620 kcal · 蛋白質43g',['白菜、豆腐、金菇煮熟。','加入牛肉。','放粉絲煮軟。','以醬油調味。']],
+['鮮蝦豆腐烏冬','蝦仁180g · 烏冬200g · 豆腐150g · 菠菜100g · 金菇100g','610 kcal · 蛋白質48g',['金菇、菠菜、豆腐煮熟。','加入蝦仁。','放烏冬煮熱。','以醬油及少量味醂調味。']],
+['雞肉親子蕎麥麵','雞胸170g · 熟蕎麥麵180g · 蛋2隻 · 洋蔥80g · 菠菜80g','610 kcal · 蛋白質54g',['洋蔥、雞肉煮熟。','加入蕎麥麵。','倒蛋液及菠菜。','蛋凝固即可。']],
+['鮭魚味噌飯碗','鮭魚150g · 熟飯160g · 毛豆70g · 菠菜100g · 味噌10g','660 kcal · 蛋白質44g',['鮭魚煎熟。','菠菜、毛豆微波。','味噌加水調醬。','配飯。']],
+['雞肉香菇炊飯風','雞胸180g · 熟飯170g · 香菇120g · 牛蒡80g · 毛豆50g','620 kcal · 蛋白質50g',['雞肉切粒煎熟。','加入香菇、牛蒡。','拌入熟飯。','加醬油及少量味醂。']],
+['牛肉蛋豆腐丼','瘦牛140g · 熟飯160g · 豆腐150g · 蛋1隻 · 洋蔥80g','630 kcal · 蛋白質47g',['洋蔥加水煮軟。','加入牛肉及豆腐。','倒蛋液。','配飯。']],
+['雞肉芝麻冷麵','雞胸180g · 熟蕎麥麵180g · 青瓜120g · 蛋1隻 · 芝麻醬10g','590 kcal · 蛋白質50g',['雞胸煮熟撕絲。','蕎麥麵沖冷。','青瓜切絲、蛋切片。','拌芝麻醬及少量醬油。']],
+['豬肉豆腐白菜烏冬','豬里脊160g · 烏冬200g · 豆腐150g · 白菜250g','630 kcal · 蛋白質46g',['白菜、豆腐煮熟。','加入豬肉。','放烏冬。','以味噌或醬油調味。']],
+['蝦仁毛豆蛋飯碗','蝦仁180g · 熟飯160g · 毛豆70g · 蛋2隻 · 西蘭花180g','630 kcal · 蛋白質50g',['蝦仁炒熟。','加入毛豆及西蘭花。','加入蛋炒熟。','配飯。']],
+['雞肉柚子胡椒飯碗','雞胸180g · 熟飯160g · 西蘭花200g · 蘑菇100g · 柚子胡椒少量','600 kcal · 蛋白質52g',['雞肉煎熟。','加入蘑菇。','以少量柚子胡椒調味。','配微波西蘭花及飯。']],
+['鯖魚豆腐白菜鍋','鯖魚120g · 豆腐180g · 白菜300g · 金菇100g · 熟飯140g','640 kcal · 蛋白質41g',['白菜、金菇、豆腐煮熟。','加入鯖魚加熱。','以味噌調味。','配飯。']],
+['雞肉蒜香意粉','乾意粉70g · 雞胸180g · 蘑菇150g · 菠菜100g · 橄欖油8g · 蒜','620 kcal · 蛋白質51g',['煮意粉。','蒜及雞肉用油炒熟。','加入蘑菇、菠菜。','拌入意粉，加少量醬油。']],
+['牛肉蔬菜炒烏冬','瘦牛150g · 烏冬200g · 椰菜150g · 青椒80g · 蘑菇100g','640 kcal · 蛋白質45g',['牛肉炒熟。','加入蔬菜。','放烏冬炒勻。','加醬油調味。']]
+];
+const WORKOUTS={
+'Upper A':[
+['Chest Press','胸推','3 × 8–12','https://media1.tenor.com/m/VDzbjiMv13cAAAAd/machine-chest-press.gif',['背部貼實椅背','握把約在胸口中段','推出時唔好鎖死手肘']],
+['Lat Pulldown','高位下拉','3 × 8–12','https://media.tenor.com/TlXWuDo9bAwAAAAd/lat-pulldown.gif',['胸口微抬','手肘向下拉','回程控制，唔好借力']],
+['Shoulder Press','肩推','3 × 8–12','https://media.tenor.com/T_vqvD5qG-YAAAAd/shoulder-press-seated-shoulder-press.gif',['核心收緊','手肘自然向下','唔好過度拱腰']],
+['Seated Row','坐姿划船','3 × 8–12','https://media.tenor.com/2NYcfHsikFcAAAAd/seated-row.gif',['胸口保持打開','手肘向後拉','回程慢慢伸直手臂']],
+['Biceps Curl','二頭彎舉','2 × 10–15','https://media1.tenor.com/m/6uinYQq-1TYAAAAd/biceps-curl.gif',['手肘固定','唔好搖身借力','落程控制']],
+['Triceps Pushdown','三頭下壓','2 × 10–15','https://media1.tenor.com/m/DsMurq8o7Y4AAAAd/tricep-pushdown-stephen-farrelly.gif',['上臂穩定','手肘貼近身體','慢慢回程']]
+],
+'Lower A':[
+['Leg Press','腿推','3 × 8–12','https://media1.tenor.com/m/7bpWZBhqnuoAAAAd/leg-press-exercise.gif',['膝蓋跟腳尖方向一致','落程控制','唔好鎖死膝蓋']],
+['Romanian Deadlift','羅馬尼亞硬舉','3 × 8–12','https://media1.tenor.com/m/VSY6K8y4zEIAAAAd/romanian-deadlift-exercise.gif',['髖部向後','背部保持中立','感受大腿後側']],
+['Leg Curl','腿彎舉','3 × 10–15','https://media.tenor.com/YtkG_5GRhjcAAAAd/leg-curl.gif',['動作慢','頂部收緊','避免甩動']],
+['Calf Raise','小腿提踵','3 × 12–15','https://media1.tenor.com/m/dE7yo5T973EAAAAd/calves-raise.gif',['全程幅度','頂部停一停','慢慢落']],
+['Plank','平板支撐','3 組','https://media1.tenor.com/m/zRgspygKntMAAAAd/exercise-plank.gif',['核心收緊','臀部唔好塌落','正常呼吸']]
+],
+'Upper B':[
+['Incline DB Press','上斜啞鈴推胸','3 × 8–12','https://media.giphy.com/media/hQFfhtpIAlEjG04mIj/giphy.gif',['肩胛收緊','啞鈴向上推','控制落程']],
+['Lat Pulldown','高位下拉','3 × 8–12','https://media.tenor.com/TlXWuDo9bAwAAAAd/lat-pulldown.gif',['胸口微抬','手肘向下','唔好借力']],
+['Lateral Raise','側平舉','3 × 12–15','https://media1.tenor.com/m/VdCASDhF7NMAAAAd/lateral-raise.gif',['手肘微曲','抬至接近肩高','重量唔好太重']],
+['Seated Row','坐姿划船','3 × 8–12','https://media.tenor.com/2NYcfHsikFcAAAAd/seated-row.gif',['胸口打開','手肘向後','慢慢回程']],
+['Face Pull','面拉','2 × 12–15','https://media1.tenor.com/m/FGsBtkQCchwAAAAd/face-pull.gif',['拉向眉眼位置','肩膀放鬆','控制回程']],
+['Biceps Curl','二頭彎舉','2 × 10–15','https://media1.tenor.com/m/6uinYQq-1TYAAAAd/biceps-curl.gif',['手肘固定','唔好借力','慢慢放低']]
+],
+'Lower B':[
+['Leg Press','腿推','3 × 8–12','https://media1.tenor.com/m/7bpWZBhqnuoAAAAd/leg-press-exercise.gif',['腳掌踩穩','膝蓋方向一致','控制下放']],
+['Hip Thrust','臀推','3 × 8–12','https://media1.tenor.com/m/pM6vr8YZeuwAAAAd/hip-thrust-workout.gif',['下巴微收','頂部收臀','唔好過度拱腰']],
+['Bulgarian Split Squat','保加利亞分腿蹲','3 × 8–10/邊','https://media.giphy.com/media/Gj8heUkFT9NyCk2v88/giphy.gif',['前腳踩穩','身體微前傾','膝蓋跟腳尖']],
+['Leg Extension','腿伸展','2 × 10–15','https://media1.tenor.com/m/L-taJvA94kQAAAAd/leg-extension.gif',['頂部停一停','控制回程','重量適中']],
+['Dead Bug','死蟲','3 組','https://media.giphy.com/media/KkPAezpvqvB18xPBJE/giphy.gif',['腰背貼地','慢慢伸展','保持呼吸']]
+]
+,
+'Full Body':[
+['Chest Press','胸推','3 × 8–12','https://media1.tenor.com/m/VDzbjiMv13cAAAAd/machine-chest-press.gif',['背部貼實椅背','推出時唔好鎖死手肘','控制回程']],
+['Lat Pulldown','高位下拉','3 × 8–12','https://media.tenor.com/TlXWuDo9bAwAAAAd/lat-pulldown.gif',['胸口微抬','手肘向下拉','唔好借力']],
+['Shoulder Press','肩推','2 × 8–12','https://media.tenor.com/T_vqvD5qG-YAAAAd/shoulder-press-seated-shoulder-press.gif',['核心收緊','唔好過度拱腰','控制下放']],
+['Leg Press','腿推','3 × 8–12','https://media1.tenor.com/m/7bpWZBhqnuoAAAAd/leg-press-exercise.gif',['膝蓋跟腳尖方向一致','落程控制','唔好鎖死膝蓋']],
+['Biceps Curl','二頭彎舉','2 × 10–15','https://media1.tenor.com/m/6uinYQq-1TYAAAAd/biceps-curl.gif',['手肘固定','唔好借力','慢慢放低']],
+['Triceps Pushdown','三頭下壓','2 × 10–15','https://media1.tenor.com/m/DsMurq8o7Y4AAAAd/tricep-pushdown-stephen-farrelly.gif',['上臂穩定','手肘貼近身體','慢慢回程']]
+]};
+const PLAN=['Upper A','Lower A','Recovery','Upper B','Lower B','Full Body','Rest','Upper A','Lower A','Recovery','Upper B','Lower B','Full Body','Rest','Upper A','Lower A','Recovery','Upper B','Lower B','Full Body','Rest','Upper A','Lower A','Recovery','Upper B','Lower B','Full Body','Rest','Upper A','Lower A'];
+
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function idxForDate(d){const s=new Date(START_DATE+'T00:00:00'),x=new Date(d.getFullYear(),d.getMonth(),d.getDate());return Math.floor((x-s)/86400000)}
+function idx(){return Math.max(0,Math.min(29,idxForDate(new Date())))}
+function key(i){return 'tc_'+i}
+function go(p){
+document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
+document.getElementById(p).classList.add('on');
+document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.page===p));
+if(p==='training'){if(typeof trainingSelected!=='number')trainingSelected=idx();renderTraining();}
+window.scrollTo({top:0,behavior:'smooth'})
+}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
+function dateOf(i){const d=new Date(START_DATE+'T00:00:00');d.setDate(d.getDate()+i);return d}
+function recipeHTML(r){const kcal=(r[2].match(/[\d,]+ kcal/)||['—'])[0],pr=(r[2].match(/蛋白質[^·]*/)||['—'])[0].replace('蛋白質','').trim();return `<div class="recipe-img">🍱</div><div class="meta"><div>熱量<b>${esc(kcal)}</b></div><div>蛋白質<b>${esc(pr)}</b></div></div><div class="muted">${esc(r[1])}</div><div class="method"><b>👨🏻‍🍳 做法</b><ol>${r[3].map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`}
+function getEx(i){return JSON.parse(localStorage.getItem(key(i)+'_ex')||'[]')}
+function trainDone(i){const t=PLAN[i];if(t==='Rest')return true;if(t==='Recovery')return localStorage.getItem(key(i)+'_walk')==='1';const a=getEx(i);return a.length===WORKOUTS[t].length&&a.every(Boolean)}
+function tasks(i){const t=PLAN[i];return [localStorage.getItem(key(i)+'_meal')==='1',trainDone(i),t==='Rest'?true:localStorage.getItem(key(i)+'_walk')==='1',localStorage.getItem(key(i)+'_beer')==='1',localStorage.getItem(key(i)+'_water')==='1',localStorage.getItem(key(i)+'_weight')==='1']}
+function status(i){const t=PLAN[i];if(t==='Rest')return '😴';if(t==='Recovery')return localStorage.getItem(key(i)+'_walk')==='1'?'🟢':'🚶';const a=tasks(i),n=a.filter(Boolean).length;return n===a.length?'🟢':n?'🟡':'🔴'}
+function pct(i){if(PLAN[i]==='Rest')return 100;const a=tasks(i);return Math.round(a.filter(Boolean).length/a.length*100)}
+function updateAll(){const i=idx(),a=tasks(i),ids=['mealStatus','trainStatus','walkStatus','beerStatus','waterStatus','weightStatus'];ids.forEach((id,n)=>document.getElementById(id).textContent=a[n]?'✅':'⭕');if(PLAN[i]==='Rest')document.getElementById('trainStatus').textContent='😴';if(PLAN[i]==='Recovery')document.getElementById('trainStatus').textContent=a[1]?'✅':'🚶';const p=pct(i);document.getElementById('percentBadge').textContent=p+'% 完成';document.getElementById('progressBar').style.width=p+'%';renderCalendars();renderSelected()}
+function renderStats(){const a=JSON.parse(localStorage.getItem('tc_records')||'[]'),x=a[a.length-1];document.getElementById('statWeight').textContent=x?x.w:'73.0';document.getElementById('statFat').textContent=x&&x.f?x.f:'—';document.getElementById('statWaist').textContent=x&&x.wa?x.wa:'—'}
+function renderToday(){const i=idx(),r=RECIPES[i],t=PLAN[i],d=dateOf(i);document.getElementById('dayLabel').textContent=`DAY ${i+1} / 30`;document.getElementById('dateLabel').textContent=d.toLocaleDateString('zh-HK',{year:'numeric',month:'numeric',day:'numeric',weekday:'short'});document.getElementById('recipeName').textContent=r[0];document.getElementById('todayRecipe').innerHTML=recipeHTML(r);document.getElementById('mealTitle').textContent='晚餐：'+r[0];document.getElementById('trainTitle').textContent=t==='Rest'?'今日：Rest Day':t==='Recovery'?'今日：Recovery':'訓練：'+t;document.getElementById('trainDetail').textContent=t==='Rest'?'休息本身就是計劃的一部分':t==='Recovery'?'快步行＋伸展':WORKOUTS[t].length+' 個動作';renderStats();updateAll()}
+function toggleMeal(){const k=key(idx())+'_meal';localStorage.setItem(k,localStorage.getItem(k)==='1'?'0':'1');updateAll()}
+function toggleWalk(){
+const i=document.getElementById('training').classList.contains('on')?currentTrainingIndex():idx();
+const k=key(i)+'_walk';
+localStorage.setItem(k,localStorage.getItem(k)==='1'?'0':'1');
+if(i===idx())renderToday();
+renderTraining();renderCalendars();renderSelected()
+}
+function toggleSimple(n){const k=key(idx())+'_'+n;localStorage.setItem(k,localStorage.getItem(k)==='1'?'0':'1');updateAll()}
+function renderTraining(){
+  const i=currentTrainingIndex(),t=PLAN[i],box=document.getElementById('exerciseBox');
+  document.getElementById('trainingTitle').textContent=t==='Rest'?'😴 Rest Day':t==='Recovery'?'🚶 Recovery':'🏋🏻 '+t;
+  document.getElementById('trainingSub').textContent=`Day ${i+1} · ${dateOf(i).toLocaleDateString('zh-HK',{month:'numeric',day:'numeric',weekday:'short'})} · `+
+    (t==='Rest'?'休息日':t==='Recovery'?'快步行 30–45 分鐘＋伸展':'完成每個動作後按一下');
+  if(t==='Rest'){
+    box.innerHTML=`<div class="card" style="grid-column:1/-1"><div class="notice">🔵 呢日係 Rest Day：純休息，唔需要完成任何訓練。</div></div>`;
+  }else if(t==='Recovery'){
+    box.innerHTML=`<div class="recovery-grid" style="grid-column:1/-1">
+      <div class="card recovery-intro">
+        <div class="notice">🟢 今日 Recovery：快步行＋伸展；<b>唔需要逐項打卡</b>。</div>
+      </div>
+
+      <div class="exercise recovery-exercise">
+        <div class="exercise-media">
+          <img src="https://media.tenor.com/9YfQ9vQXQ2QAAAAd/walking.gif" alt="🚶 快步行 Brisk Walk" loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420' viewBox='0 0 900 420'><rect width='900' height='420' fill='%23f4ead8'/><text x='450' y='205' text-anchor='middle' font-family='Arial' font-size='34' fill='%237b5a2a'>Recovery GIF</text><text x='450' y='250' text-anchor='middle' font-family='Arial' font-size='22' fill='%23888888'>示範載入中</text></svg>'">
+          <span class="gif-badge">GIF</span>
+        </div>
+        <div class="exercise-body">
+          <div class="exercise-name">🚶 快步行</div>
+          <div class="exercise-en">Brisk Walk</div>
+          <div class="exercise-meta">⏱ 30–45 分鐘</div>
+          <ul class="cues"><li>保持輕微出汗，可以講到話但唔需要太喘。</li></ul>
+        </div>
+      </div>
+
+      <div class="exercise recovery-exercise">
+        <div class="exercise-media">
+          <img src="https://media.tenor.com/6QY5f2v1mXQAAAAd/cat-cow-stretch.gif" alt="🐈 貓牛式 Cat-Cow" loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420' viewBox='0 0 900 420'><rect width='900' height='420' fill='%23f4ead8'/><text x='450' y='205' text-anchor='middle' font-family='Arial' font-size='34' fill='%237b5a2a'>Recovery GIF</text><text x='450' y='250' text-anchor='middle' font-family='Arial' font-size='22' fill='%23888888'>示範載入中</text></svg>'">
+          <span class="gif-badge">GIF</span>
+        </div>
+        <div class="exercise-body">
+          <div class="exercise-name">🐈 貓牛式</div>
+          <div class="exercise-en">Cat-Cow</div>
+          <div class="exercise-meta">⏱ 10–15 次</div>
+          <ul class="cues"><li>慢慢配合呼吸，放鬆脊椎。</li></ul>
+        </div>
+      </div>
+
+      <div class="exercise recovery-exercise">
+        <div class="exercise-media">
+          <img src="https://media.tenor.com/7n8j0Y4uQe0AAAAd/hip-flexor-stretch.gif" alt="🦵 髖屈肌伸展 Hip Flexor Stretch" loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420' viewBox='0 0 900 420'><rect width='900' height='420' fill='%23f4ead8'/><text x='450' y='205' text-anchor='middle' font-family='Arial' font-size='34' fill='%237b5a2a'>Recovery GIF</text><text x='450' y='250' text-anchor='middle' font-family='Arial' font-size='22' fill='%23888888'>示範載入中</text></svg>'">
+          <span class="gif-badge">GIF</span>
+        </div>
+        <div class="exercise-body">
+          <div class="exercise-name">🦵 髖屈肌伸展</div>
+          <div class="exercise-en">Hip Flexor Stretch</div>
+          <div class="exercise-meta">⏱ 左右各 30 秒 × 2</div>
+          <ul class="cues"><li>感受前側髖部伸展，保持呼吸。</li></ul>
+        </div>
+      </div>
+
+      <div class="exercise recovery-exercise">
+        <div class="exercise-media">
+          <img src="https://media.tenor.com/5Q6Jm7Y8k9AAAAAd/hamstring-stretch.gif" alt="🦵 大腿後側伸展 Hamstring Stretch" loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420' viewBox='0 0 900 420'><rect width='900' height='420' fill='%23f4ead8'/><text x='450' y='205' text-anchor='middle' font-family='Arial' font-size='34' fill='%237b5a2a'>Recovery GIF</text><text x='450' y='250' text-anchor='middle' font-family='Arial' font-size='22' fill='%23888888'>示範載入中</text></svg>'">
+          <span class="gif-badge">GIF</span>
+        </div>
+        <div class="exercise-body">
+          <div class="exercise-name">🦵 大腿後側伸展</div>
+          <div class="exercise-en">Hamstring Stretch</div>
+          <div class="exercise-meta">⏱ 左右各 30 秒 × 2</div>
+          <ul class="cues"><li>膝蓋微彎，慢慢向前，唔好彈。</li></ul>
+        </div>
+      </div>
+
+      <div class="exercise recovery-exercise">
+        <div class="exercise-media">
+          <img src="https://media.tenor.com/3pR8uL2mN7AAAAAd/open-book-stretch.gif" alt="🧘 胸椎旋轉 Open Book" loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420' viewBox='0 0 900 420'><rect width='900' height='420' fill='%23f4ead8'/><text x='450' y='205' text-anchor='middle' font-family='Arial' font-size='34' fill='%237b5a2a'>Recovery GIF</text><text x='450' y='250' text-anchor='middle' font-family='Arial' font-size='22' fill='%23888888'>示範載入中</text></svg>'">
+          <span class="gif-badge">GIF</span>
+        </div>
+        <div class="exercise-body">
+          <div class="exercise-name">🧘 胸椎旋轉</div>
+          <div class="exercise-en">Open Book</div>
+          <div class="exercise-meta">⏱ 左右各 10–12 次</div>
+          <ul class="cues"><li>打開胸椎，動作慢而順。</li></ul>
+        </div>
+      </div>
+
+      <div class="exercise recovery-exercise">
+        <div class="exercise-media">
+          <img src="https://media.tenor.com/2aB7cD4eF6AAAAAd/chest-back-stretch.gif" alt="🙆 胸／背伸展 Chest & Back Stretch" loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420' viewBox='0 0 900 420'><rect width='900' height='420' fill='%23f4ead8'/><text x='450' y='205' text-anchor='middle' font-family='Arial' font-size='34' fill='%237b5a2a'>Recovery GIF</text><text x='450' y='250' text-anchor='middle' font-family='Arial' font-size='22' fill='%23888888'>示範載入中</text></svg>'">
+          <span class="gif-badge">GIF</span>
+        </div>
+        <div class="exercise-body">
+          <div class="exercise-name">🙆 胸／背伸展</div>
+          <div class="exercise-en">Chest & Back Stretch</div>
+          <div class="exercise-meta">⏱ 30–45 秒 × 2</div>
+          <ul class="cues"><li>放鬆肩膀同上背，保持自然呼吸。</li></ul>
+        </div>
+      </div>
+
+      <div class="exercise recovery-exercise">
+        <div class="exercise-media">
+          <img src="https://media.tenor.com/8xY3zK5wM2AAAAAd/childs-pose.gif" alt="🧘 Child's Pose Child's Pose" loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420' viewBox='0 0 900 420'><rect width='900' height='420' fill='%23f4ead8'/><text x='450' y='205' text-anchor='middle' font-family='Arial' font-size='34' fill='%237b5a2a'>Recovery GIF</text><text x='450' y='250' text-anchor='middle' font-family='Arial' font-size='22' fill='%23888888'>示範載入中</text></svg>'">
+          <span class="gif-badge">GIF</span>
+        </div>
+        <div class="exercise-body">
+          <div class="exercise-name">🧘 Child's Pose</div>
+          <div class="exercise-en">Child's Pose</div>
+          <div class="exercise-meta">⏱ 30–60 秒</div>
+          <ul class="cues"><li>全身放鬆，慢慢深呼吸。</li></ul>
+        </div>
+      </div>
+    </div>`;
+  }else{
+    const a=getEx(i);
+    box.innerHTML=WORKOUTS[t].map((e,n)=>`<div class="exercise">
+      ${e[3]?`<div class="exercise-media"><img src="${e[3]}" alt="${esc(e[1])}" loading="lazy"></div>`:''}
+      <div class="exercise-body"><div class="exercise-name">${esc(e[1])}</div><div class="exercise-en">${esc(e[0])}</div>
+      <div class="exercise-meta">${esc(e[2])}</div><ul class="cues">${e[4].map(c=>`<li>${esc(c)}</li>`).join('')}</ul>
+      <button type="button" class="donebtn ${a[n]?'done':''}" onclick="toggleExercise(${n})">${a[n]?'☑️ 已完成':'⬜ 完成'}</button></div></div>`).join('');
+  }
+  document.getElementById('trainingCount').textContent=t==='Rest'?'REST':t==='Recovery'?'RECOVERY':getEx(i).filter(Boolean).length+'/'+WORKOUTS[t].length;
+  const walkBtn=document.getElementById('walkBtn');
+  if(walkBtn){
+    walkBtn.style.display=t==='Recovery'||t==='Rest'?'none':'';
+    walkBtn.textContent=localStorage.getItem(key(i)+'_walk')==='1'?'☑️ 已完成':'⬜ 完成 30 分鐘';
+  }
+  renderTrainingDays();
+}
+let trainingSelected=idx();
+function currentTrainingIndex(){return Math.max(0,Math.min(29,trainingSelected));}
+function selectTrainingDay(i){trainingSelected=Math.max(0,Math.min(29,i));renderTraining();}
+function renderTrainingDays(){
+  const box=document.getElementById('trainingDays'); if(!box)return;
+  const today=idx();
+  box.innerHTML=PLAN.map((t,i)=>{
+    const active=i===trainingSelected,todayClass=i===today?' today':'';
+    const s=t==='Rest'?'😴':t==='Recovery'?(localStorage.getItem(key(i)+'_walk')==='1'?'🟢':'🚶'):status(i);
+    return `<button type="button" class="training-day ${active?'active':''}${todayClass}" onclick="selectTrainingDay(${i})"><b>Day ${i+1}</b><div class="td-status">${s}</div><div>${t==='Rest'?'Rest':t==='Recovery'?'Recovery':t}</div></button>`;
+  }).join('');
+}
+
+function toggleExercise(n){
+  const i=currentTrainingIndex(),a=getEx(i);
+  a[n]=!a[n];
+  localStorage.setItem(key(i)+'_ex',JSON.stringify(a));
+  renderTraining();
+  if(i===idx())renderToday();
+  renderCalendars();
+  renderSelected();
+}
+
+let calDate=new Date(new Date(START_DATE+'T00:00:00').getFullYear(),new Date(START_DATE+'T00:00:00').getMonth(),1),selected=0;
+function changeMonth(n){calDate=new Date(calDate.getFullYear(),calDate.getMonth()+n,1);renderCalendars()}
+function renderCalendars(){['calendarGrid','calendarGrid2'].forEach((id,z)=>{const title=z?'monthTitle2':'monthTitle',y=calDate.getFullYear(),m=calDate.getMonth(),box=document.getElementById(id);document.getElementById(title).textContent=`${y}年${m+1}月`;let h=['日','一','二','三','四','五','六'].map(x=>`<div class="week">${x}</div>`).join(''),first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();for(let n=0;n<first;n++)h+='<div class="cell empty"></div>';for(let d=1;d<=days;d++){const dt=new Date(y,m,d),i=idxForDate(dt),valid=i>=0&&i<30;h+=valid?`<div class="cell ${i===idx()?'today':''}" onclick="selectDay(${i})"><div class="num">${d}</div><div class="cell-status">${status(i)}</div><div class="cell-type">${PLAN[i]}</div></div>`:`<div class="cell"><div class="num">${d}</div></div>`}box.innerHTML=h})}
+function selectDay(i){selected=i;trainingSelected=i;renderSelected();renderTraining();}
+function renderSelected(){const i=selected,t=PLAN[i],a=tasks(i),labels=['🍚 晚餐','🏋🏻 訓練','🚶 快步行','🍺 啤酒','💧 飲水','⚖️ 體重紀錄'];document.getElementById('detailDate').textContent=dateOf(i).toLocaleDateString('zh-HK',{year:'numeric',month:'numeric',day:'numeric',weekday:'short'});document.getElementById('detailDay').textContent='Day '+(i+1);let h=labels.map((x,n)=>`<div class="detail-row"><span>${x}</span><span class="right">${n===1&&t==='Rest'?'😴':n===1&&t==='Recovery'?(a[n]?'✅':'🚶'):(a[n]?'✅':'⭕')}</span></div>`).join('');if(t!=='Rest'&&t!=='Recovery'){const e=getEx(i);h+=`<div class="detail-row"><span>🏋🏻 動作完成</span><span class="right">${e.filter(Boolean).length}/${WORKOUTS[t].length}</span></div>`}h+=`<div class="complete-line">${status(i)}　完成度 ${pct(i)}%</div>`;document.getElementById('calendarDetail').innerHTML=h;document.getElementById('calendarDetail2').innerHTML=h}
+const SEASONINGS=['醬油','味醂','味噌','鹽麴','橄欖油','黑胡椒','鹽','豆瓣醬','咖喱塊','芝麻','薑','蒜','蔥','紫菜'];
+function toggleSeasoningPanel(){
+const p=document.getElementById('seasoningPanel'),b=document.getElementById('seasoningToggleBtn');if(!p||!b)return;
+const hidden=p.classList.toggle('seasoning-panel-hidden');b.textContent=hidden?'展開':'收起';localStorage.setItem('tc_season_collapsed',hidden?'1':'0');
+}
+function renderSeasonings(){
+const box=document.getElementById('seasoningList');if(!box)return;
+box.innerHTML=SEASONINGS.map((x,i)=>{const done=localStorage.getItem('tc_season_'+i)==='1';return `<button type="button" class="seasoning-item ${done?'checked':''}" onclick="toggleSeasoning(${i})"><span class="seasoning-check">${done?'☑️':'⬜'}</span><span class="seasoning-name">${esc(x)}</span></button>`}).join('');
+const p=document.getElementById('seasoningPanel'),b=document.getElementById('seasoningToggleBtn'),hidden=localStorage.getItem('tc_season_collapsed')==='1';
+if(p)p.classList.toggle('seasoning-panel-hidden',hidden);if(b)b.textContent=hidden?'展開':'收起';
+}
+function toggleSeasoning(i){const k='tc_season_'+i;localStorage.setItem(k,localStorage.getItem(k)==='1'?'0':'1');renderSeasonings()}
+function resetSeasonings(){SEASONINGS.forEach((_,i)=>localStorage.removeItem('tc_season_'+i));renderSeasonings()}
+function saveBodyReport(event){
+const file=event.target.files&&event.target.files[0];if(!file)return;
+if(!file.type.startsWith('image/')){alert('請上載圖片檔案');return;}
+const reader=new FileReader();reader.onload=function(){
+const img=new Image();img.onload=function(){
+const max=1200,scale=Math.min(1,max/img.width,max/img.height),c=document.createElement('canvas');
+c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+try{localStorage.setItem('tc_body_report',c.toDataURL('image/jpeg',.82));renderBodyReport();}
+catch(e){alert('圖片太大，未能儲存；請先將截圖縮細再上載。');}
+};img.src=reader.result;};reader.readAsDataURL(file);
+}
+function renderBodyReport(){
+const box=document.getElementById('bodyReportPreview');if(!box)return;
+const data=localStorage.getItem('tc_body_report');
+box.innerHTML=data?`<div class="body-report-preview"><img src="${data}" alt="小米 Zepp Life 身體組成表"><button class="reset-seasoning" style="margin-top:8px" onclick="removeBodyReport()">移除圖片</button></div>`:'<div class="muted">尚未上載。</div>';
+}
+function removeBodyReport(){localStorage.removeItem('tc_body_report');renderBodyReport();}
+function isWaistDay(i){return i%7===0;}
+function updateWaistField(){
+const i=idx(),field=document.getElementById('waistField'),hint=document.getElementById('waistHint'),input=document.getElementById('wa');if(!field||!hint||!input)return;
+const yes=isWaistDay(i);field.style.opacity=yes?'1':'.45';input.disabled=!yes;
+hint.textContent=yes?`📏 今日係腰圍量度日（Day ${i+1}）。`:`📏 腰圍每 7 日量一次；今日 Day ${i+1}，唔需要量。`;
+}
+
+function renderRecipes(){document.getElementById('recipeList').innerHTML=RECIPES.map((r,i)=>`<div class="card"><div class="muted">DAY ${i+1}</div><div class="recipe-title">${esc(r[0])}</div>${recipeHTML(r)}</div>`).join('')}
+
+function renderWeeklyShopping(){
+  const box=document.getElementById('weeklyShopping'); if(!box)return;
+  let h='';
+  for(let w=0;w<5;w++){
+    const from=w*7,to=Math.min(from+7,RECIPES.length);
+    h+=`<details ${w===0?'open':''}><summary>第 ${w+1} 週 · Day ${from+1}–${to}</summary><div class="shop-body">`;
+    for(let i=from;i<to;i++) h+=`<div class="shop-day"><b>Day ${i+1} · ${esc(RECIPES[i][0])}</b>${esc(RECIPES[i][1])}</div>`;
+    h+=`<div class="shop-season"><b>🧂 調味料／常備品</b><br>${SEASONINGS.map(esc).join(' · ')}</div></div></details>`;
+  }
+  box.innerHTML=h;
+}
+function saveRecord(){
+const i=idx(),w=+document.getElementById('w').value;if(!w){alert('請輸入體重');return}
+const a=JSON.parse(localStorage.getItem('tc_records')||'[]'),d=new Date().toLocaleDateString('zh-HK'),old=a.find(q=>q.d===d)||{};
+const waist=isWaistDay(i)?document.getElementById('wa').value:(old.wa||'');
+const x={d,w,f:document.getElementById('f').value,wa:waist,b:document.getElementById('beer').value},j=a.findIndex(q=>q.d===d);
+if(j>=0)a[j]=x;else a.push(x);
+localStorage.setItem('tc_records',JSON.stringify(a));localStorage.setItem(key(i)+'_weight','1');localStorage.setItem(key(i)+'_beer',+x.b<=2?'1':'0');
+renderRecords();renderToday();updateWaistField();alert('已儲存今日紀錄！')}
+function renderRecords(){const a=JSON.parse(localStorage.getItem('tc_records')||'[]');document.getElementById('records').innerHTML=a.slice().reverse().map(x=>`<div class="record">📅 ${esc(x.d)}<br>⚖️ ${esc(x.w)} kg　📉 ${esc(x.f||'—')}%　📏 ${esc(x.wa||'—')} cm　🍺 ${esc(x.b||0)} 杯</div>`).join('')||'<span class="muted">暫時未有紀錄。</span>'}
+function init(){selected=idx();trainingSelected=idx();renderToday();renderRecipes();renderWeeklyShopping();renderSeasonings();renderRecords();renderBodyReport();updateWaistField();renderTraining();renderCalendars();renderSelected()}
+window.addEventListener('DOMContentLoaded',init);
+</script></body></html>
